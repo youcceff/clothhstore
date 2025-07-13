@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ClothZone</title>
-  <link rel="stylesheet" href="https://cdn.tailwindcss.com">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="cstore.css">
 </head>
 <body class="text-white min-h-screen flex flex-col">
+  <!-- Header/Navigation -->
   <header class="bg-transparent py-4 px-4 sm:px-6 max-w-7xl mx-auto w-full">
     <div class="flex items-center justify-between">
       <h1 class="text-2xl font-bold">ClothZone</h1>
@@ -30,6 +31,7 @@
     </div>
   </header>
 
+  <!-- Hero Section -->
   <section class="text-center py-20" id="home">
     <h2 class="text-5xl font-bold mb-4">Step Into Style</h2>
     <p class="text-xl mb-6">Trendy clothing for every season. Feel confident, look amazing.</p>
@@ -38,6 +40,7 @@
     </a>
   </section>
 
+  <!-- Products Section -->
   <section class="bg-white text-gray-800 rounded-t-3xl py-12 px-6 mt-auto" id="shop">
     <div class="max-w-7xl mx-auto">
       <h3 class="text-3xl font-bold mb-8 text-center">Featured Products</h3>
@@ -45,6 +48,7 @@
     </div>
   </section>
 
+  <!-- Best Sellers -->
   <section class="best-products">
     <h2 class="best-product-title">Our Best Sellers</h2>
     <div class="swiper bestProductsSwiper max-w-7xl mx-auto px-4">
@@ -55,6 +59,7 @@
     </div>
   </section>
 
+  <!-- Cart Section -->
   <section class="cart" id="cart">
     <div class="max-w-3xl mx-auto bg-white text-gray-800 p-6 rounded-xl shadow">
       <h1 class="text-3xl font-bold mb-6 text-center">Your Cart</h1>
@@ -70,14 +75,16 @@
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="text-center text-sm py-6 text-white mt-10">
     &copy; 2025 ClothZone. All rights reserved.
   </footer>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="cart.js"></script>
   <script>
-    // Initialize default products if none exist
+    // Initialize default products
     function initializeProducts() {
       if (!localStorage.getItem('products')) {
         const defaultProducts = [
@@ -107,12 +114,14 @@
     document.addEventListener('DOMContentLoaded', function() {
       initializeProducts();
       
+      // Mobile menu toggle
       const toggle = document.getElementById("menu-toggle");
       const mobileNav = document.getElementById("nav-mobile");
       toggle.addEventListener("click", () => {
         mobileNav.classList.toggle("hidden");
       });
 
+      // Load products
       const products = JSON.parse(localStorage.getItem('products') || [];
       const productGrid = document.getElementById('product-grid');
       
@@ -131,6 +140,7 @@
         `;
       });
 
+      // Initialize best sellers slider
       const bestProducts = products.filter(p => p.price > 1500).slice(0, 5);
       const swiperWrapper = document.querySelector('.bestProductsSwiper .swiper-wrapper');
       
@@ -163,8 +173,6 @@
           1024: { slidesPerView: 4 },
         }
       });
-
-      updateCartUI();
     });
   </script>
 </body>
