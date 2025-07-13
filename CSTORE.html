@@ -151,15 +151,62 @@
     });
   </script>
 
-  <section class="best-products">
-    <h2 class="best-product-title">Our Best Sellers</h2>
-    <div class="swiper bestProductsSwiper max-w-7xl mx-auto px-4">
-      <div class="swiper-wrapper"></div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+ <section class="best-products">
+  <h2 class="best-product-title">Our Best Sellers</h2>
+  <div class="swiper bestProductsSwiper max-w-7xl mx-auto px-4">
+    <div class="swiper-wrapper" id="swiper-wrapper">
+      <!-- Dynamic content from dashboard -->
     </div>
-  </section>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+</section>
+
+<script>
+// Initialize Swiper with dynamic content
+function initSwiper() {
+  const swiperImages = JSON.parse(localStorage.getItem('swiperImages') || '[]');
+  const swiperWrapper = document.getElementById('swiper-wrapper');
+  
+  swiperWrapper.innerHTML = '';
+  
+  swiperImages.forEach(img => {
+    swiperWrapper.innerHTML += `
+      <div class="swiper-slide">
+        <div class="p-4 h-full flex flex-col">
+          <img src="${img}" class="w-full h-64 object-cover rounded-lg">
+        </div>
+      </div>
+    `;
+  });
+
+  // Only initialize swiper if images exist
+  if (swiperImages.length > 0) {
+    new Swiper('.bestProductsSwiper', {
+      loop: true,
+      slidesPerView: 1,
+      spaceBetween: 20,
+      autoplay: { delay: 3000, disableOnInteraction: false },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+      breakpoints: {
+        640: { slidesPerView: 2 },
+        768: { slidesPerView: 3 },
+        1024: { slidesPerView: 4 },
+      }
+    });
+  } else {
+    document.querySelector('.best-products').style.display = 'none';
+  }
+}
+
+// Call this when DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+  initSwiper();
+  // ... rest of your existing code
+});
+</script>
 
   <section class="cart" id="cart">
     <div class="max-w-3xl mx-auto bg-white text-gray-800 p-6 rounded-xl shadow">
