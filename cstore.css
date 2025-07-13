@@ -1,4 +1,0 @@
-/* Apply a beautiful purple-to-blue gradient as the page background */
-body {
-    background: linear-gradient(135deg, #7f00ff, #dc30ff);
-  }
