@@ -22,7 +22,46 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       animation: fadeIn 1s ease-in;
     }
-
+      <style>
+    /* [Previous styles remain the same] */
+    
+    /* Add these new styles for image upload */
+    .image-upload-container {
+      margin: 15px 0;
+    }
+    
+    .image-preview {
+      max-width: 150px;
+      max-height: 150px;
+      display: block;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    
+    .custom-file-upload {
+      display: inline-block;
+      padding: 8px 12px;
+      cursor: pointer;
+      background: #5a67d8;
+      color: white;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    
+    .custom-file-upload:hover {
+      background: #434190;
+    }
+    
+    #product-image {
+      display: none;
+    }
+    
+    .file-name {
+      display: inline-block;
+      margin-left: 10px;
+      color: #666;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -194,7 +233,93 @@
       </thead>
       <tbody id="orders-body"></tbody>
     </table>
+     <div class="dashboard">
+    <!-- [Previous header and orders table remain the same] -->
 
+    <div class="form-section">
+      <h2>➕ Add New Product</h2>
+      <input type="text" id="product-name" placeholder="Product Name" required>
+      <input type="number" id="product-price" placeholder="Price (DZD)" required>
+      <textarea id="product-desc" placeholder="Product Description" rows="3"></textarea>
+      
+      <div class="image-upload-container">
+        <label for="product-image" class="custom-file-upload">
+          Choose Product Image
+        </label>
+        <span id="file-name" class="file-name">No image selected</span>
+        <input type="file" id="product-image" accept="image/*">
+        <img id="image-preview" class="image-preview" style="display: none;">
+      </div>
+      
+      <button onclick="addProduct()">Add Product</button>
+    </div>
+
+    <!-- [Rest of the content remains the same] -->
+  </div>
+
+  <script>
+    // [Previous initialization and order functions remain the same]
+    
+    // Handle image preview
+    document.getElementById('product-image').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById('image-preview');
+      const fileName = document.getElementById('file-name');
+      
+      if (file) {
+        fileName.textContent = file.name;
+        
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          preview.src = event.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        fileName.textContent = 'No image selected';
+        preview.style.display = 'none';
+      }
+    });
+
+    // Modified addProduct function to handle images
+    function addProduct() {
+      const name = document.getElementById('product-name').value;
+      const price = document.getElementById('product-price').value;
+      const desc = document.getElementById('product-desc').value;
+      const imageInput = document.getElementById('product-image');
+      const preview = document.getElementById('image-preview');
+
+      if (!name || !price) {
+        alert('❌ Please fill out required product fields (Name and Price).');
+        return;
+      }
+
+      const products = JSON.parse(localStorage.getItem('products') || []);
+      
+      // Create product object with image data if available
+      const newProduct = {
+        name,
+        price: parseFloat(price),
+        desc,
+        image: preview.style.display === 'block' ? preview.src : 'images/placeholder.jpg'
+      };
+
+      products.push(newProduct);
+      localStorage.setItem('products', JSON.stringify(products));
+
+      // Clear form and reset image
+      document.getElementById('product-name').value = '';
+      document.getElementById('product-price').value = '';
+      document.getElementById('product-desc').value = '';
+      imageInput.value = '';
+      document.getElementById('file-name').textContent = 'No image selected';
+      preview.style.display = 'none';
+      
+      loadProducts();
+    }
+
+    // [Rest of the JavaScript remains the same]
+  </script>
     <div class="form-section">
       <h2>➕ Add New Product</h2>
       <input type="text" id="product-name" placeholder="Product Name" required>
@@ -202,7 +327,6 @@
       <textarea id="product-desc" placeholder="Product Description" rows="3"></textarea>
       <button onclick="addProduct()">Add Product</button>
     </div>
-
     <div class="form-section">
       <h2>📦 Products List</h2>
       <div class="products-grid" id="products-grid">
