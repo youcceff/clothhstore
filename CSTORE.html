@@ -76,7 +76,34 @@
 <body class="text-white min-h-screen flex flex-col">
   <!-- [Keep your existing header and hero section] -->
 
-  <section class="bg-white text-gray-800 rounded-t-3xl py-12 px-6 mt-auto" id="shop">
+
+  <header class="bg-transparent py-4 px-4 sm:px-6 max-w-7xl mx-auto w-full">
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-bold">ClothZone</h1>
+      <button id="menu-toggle" class="text-3xl sm:hidden focus:outline-none">&#9776;</button>
+      <nav class="hidden sm:flex space-x-6 text-base" id="nav-desktop">
+        <a href="#home" class="hover:text-gray-200">Home</a>
+        <a href="#shop" class="hover:text-gray-200">Shop</a>
+        <a href="#about" class="hover:text-gray-200">About</a>
+        <a href="#cart" class="hover:text-gray-200">Cart (<span id="cart-count">0</span>)</a>
+      </nav>
+    </div>
+    <div id="nav-mobile" class="sm:hidden mt-4 hidden flex-col space-y-2 text-base text-center">
+      <a href="#home" class="block hover:text-gray-200">Home</a>
+      <a href="#shop" class="block hover:text-gray-200">Shop</a>
+      <a href="#about" class="block hover:text-gray-200">About</a>
+      <a href="#cart" class="block hover:text-gray-200">Cart</a>
+    </div>
+  </header>
+  
+  <section class="text-center py-20" id="home">
+    <h2 class="text-5xl font-bold mb-4">Step Into Style</h2>
+    <p class="text-xl mb-6">Trendy clothing for every season. Feel confident, look amazing.</p>
+    <a href="#shop" class="bg-white text-purple-700 font-semibold px-6 py-3 rounded-lg shadow hover:shadow-lg transition">
+      Shop Collection
+    </a>
+  </section>
+    <section class="bg-white text-gray-800 rounded-t-3xl py-12 px-6 mt-auto" id="shop">
     <div class="max-w-7xl mx-auto">
       <h3 class="text-3xl font-bold mb-8 text-center">Featured Products</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="product-grid">
@@ -123,33 +150,6 @@
       // [Keep your existing swiper and cart code]
     });
   </script>
-  <header class="bg-transparent py-4 px-4 sm:px-6 max-w-7xl mx-auto w-full">
-    <div class="flex items-center justify-between">
-      <h1 class="text-2xl font-bold">ClothZone</h1>
-      <button id="menu-toggle" class="text-3xl sm:hidden focus:outline-none">&#9776;</button>
-      <nav class="hidden sm:flex space-x-6 text-base" id="nav-desktop">
-        <a href="#home" class="hover:text-gray-200">Home</a>
-        <a href="#shop" class="hover:text-gray-200">Shop</a>
-        <a href="#about" class="hover:text-gray-200">About</a>
-        <a href="#cart" class="hover:text-gray-200">Cart (<span id="cart-count">0</span>)</a>
-      </nav>
-    </div>
-    <div id="nav-mobile" class="sm:hidden mt-4 hidden flex-col space-y-2 text-base text-center">
-      <a href="#home" class="block hover:text-gray-200">Home</a>
-      <a href="#shop" class="block hover:text-gray-200">Shop</a>
-      <a href="#about" class="block hover:text-gray-200">About</a>
-      <a href="#cart" class="block hover:text-gray-200">Cart</a>
-    </div>
-  </header>
-
-  <section class="text-center py-20" id="home">
-    <h2 class="text-5xl font-bold mb-4">Step Into Style</h2>
-    <p class="text-xl mb-6">Trendy clothing for every season. Feel confident, look amazing.</p>
-    <a href="#shop" class="bg-white text-purple-700 font-semibold px-6 py-3 rounded-lg shadow hover:shadow-lg transition">
-      Shop Collection
-    </a>
-  </section>
-
   <section class="bg-white text-gray-800 rounded-t-3xl py-12 px-6 mt-auto" id="shop">
     <div class="max-w-7xl mx-auto">
       <h3 class="text-3xl font-bold mb-8 text-center">Featured Products</h3>
