@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout - ClothZone</title>
   <style>
     body {
@@ -10,8 +10,8 @@
       background: linear-gradient(135deg, #7f00ff, #dc30ff);
       margin: 0;
       padding: 0;
+      min-height: 100vh;
     }
-
     .container {
       max-width: 500px;
       margin: 50px auto;
@@ -20,18 +20,16 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-
     h2 {
       text-align: center;
       margin-bottom: 20px;
+      color: #5a67d8;
     }
-
     label {
       display: block;
       margin-bottom: 8px;
       font-weight: bold;
     }
-
     input, textarea {
       width: 100%;
       padding: 10px;
@@ -40,7 +38,6 @@
       border: 1px solid #ccc;
       font-size: 16px;
     }
-
     button {
       background: #5a67d8;
       color: white;
@@ -51,11 +48,9 @@
       font-size: 18px;
       cursor: pointer;
     }
-
     button:hover {
       background: #434190;
     }
-
     .success-message {
       display: none;
       text-align: center;
@@ -63,30 +58,18 @@
       color: green;
       font-weight: bold;
     }
-
     .orders-table {
       margin-top: 30px;
       width: 100%;
       border-collapse: collapse;
     }
-
     .orders-table th, .orders-table td {
       border: 1px solid #ccc;
       padding: 8px;
       text-align: left;
     }
-
     .orders-table th {
       background-color: #f3f3f3;
-    }
-
-    #clean-orders {
-      margin-top: 10px;
-      background-color: crimson;
-    }
-
-    #clean-orders:hover {
-      background-color: darkred;
     }
   </style>
 </head>
@@ -95,51 +78,33 @@
     <h2>Checkout Information</h2>
     <form id="checkout-form">
       <label for="fname">First Name</label>
-      <input type="text" id="fname" name="fname" required />
+      <input type="text" id="fname" name="fname" required>
+      
       <label for="lname">Family Name</label>
-      <input type="text" id="lname" name="lname" required />
+      <input type="text" id="lname" name="lname" required>
+      
       <label for="phone">Phone Number</label>
-      <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" />
+      <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+      
       <label for="card">Card Number</label>
-      <input type="text" id="card" name="card" required pattern="[0-9]{16}" />
+      <input type="text" id="card" name="card" required pattern="[0-9]{16}">
+      
       <label for="location">Location</label>
       <textarea id="location" name="location" rows="3" required></textarea>
+      
       <button type="submit">Buy Now</button>
     </form>
     
     <div class="success-message" id="success-msg">✅ Order placed successfully!</div>
-
-    
   </div>
 
   <script>
-    const ordersTable = document.getElementById('orders-table');
-    const ordersBody = document.getElementById('orders-body');
     const successMsg = document.getElementById('success-msg');
-
-    function loadOrders() {
-      const savedOrders = JSON.parse(localStorage.getItem('buyers') || '[]');
-      if (savedOrders.length > 0) {
-        ordersBody.innerHTML = '';
-        savedOrders.forEach(order => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${order.firstName}</td>
-            <td>${order.lastName}</td>
-            <td>${order.phone}</td>
-            <td>${order.card}</td>
-            <td>${order.location}</td>
-          `;
-          ordersBody.appendChild(row);
-        });
-        ordersTable.style.display = 'table';
-      } else {
-        ordersTable.style.display = 'none';
-      }
-    }
 
     document.getElementById('checkout-form').addEventListener('submit', function(e) {
       e.preventDefault();
+      
+      // Validate inputs
       const firstName = document.getElementById('fname').value.trim();
       const lastName = document.getElementById('lname').value.trim();
       const phone = document.getElementById('phone').value.trim();
@@ -156,28 +121,40 @@
         return;
       }
 
-      
+      // Get cart items
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
       const items = cart.map(item => `${item.name} (x${item.quantity})`).join(", ");
       const total = cart.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0) + 500;
-      const newOrder = { firstName, lastName, phone, card, location, items, total };
+      
+      // Create order
+      const newOrder = { 
+        firstName, 
+        lastName, 
+        phone, 
+        card, 
+        location, 
+        items, 
+        total 
+      };
     
-      const existingOrders = JSON.parse(localStorage.getItem('buyers') || '[]');
+      // Save order
+      const existingOrders = JSON.parse(localStorage.getItem('buyers') || []);
       existingOrders.push(newOrder);
       localStorage.setItem('buyers', JSON.stringify(existingOrders));
 
-      loadOrders();
+      // Clear cart
+      localStorage.setItem('cart', JSON.stringify([]));
+      
+      // Show success message
       successMsg.style.display = 'block';
-
-      // localStorage.setItem('cart', JSON.stringify([]));
-
+      
+      // Reset form
       setTimeout(() => {
         document.getElementById('checkout-form').reset();
         successMsg.style.display = 'none';
+        window.location.href = 'index.html';
       }, 2000);
     });
-
-    loadOrders();
   </script>
 </body>
 </html>
