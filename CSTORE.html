@@ -4,38 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ClothZone</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.tailwindcss.com">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <link rel="stylesheet" href="cstore.css">
-  <style>
-    .best-products {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 2rem 0;
-      margin: 2rem 0;
-    }
-    .swiper-slide {
-      background: white;
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      height: auto;
-    }
-    .best-product-title {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      color: white;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    .swiper-button-next, .swiper-button-prev {
-      color: white;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    .swiper-pagination-bullet {
-      background: white;
-    }
-  </style>
+  <link rel="stylesheet" href="styles/main.css">
 </head>
 <body class="text-white min-h-screen flex flex-col">
   <header class="bg-transparent py-4 px-4 sm:px-6 max-w-7xl mx-auto w-full">
@@ -47,6 +18,7 @@
         <a href="#shop" class="hover:text-gray-200">Shop</a>
         <a href="#about" class="hover:text-gray-200">About</a>
         <a href="#cart" class="hover:text-gray-200">Cart (<span id="cart-count">0</span>)</a>
+        <a href="dashboard.html" class="hover:text-gray-200">Admin</a>
       </nav>
     </div>
     <div id="nav-mobile" class="sm:hidden mt-4 hidden flex-col space-y-2 text-base text-center">
@@ -54,6 +26,7 @@
       <a href="#shop" class="block hover:text-gray-200">Shop</a>
       <a href="#about" class="block hover:text-gray-200">About</a>
       <a href="#cart" class="block hover:text-gray-200">Cart</a>
+      <a href="dashboard.html" class="block hover:text-gray-200">Admin</a>
     </div>
   </header>
 
@@ -104,14 +77,43 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="cart.js"></script>
   <script>
+    // Initialize default products if none exist
+    function initializeProducts() {
+      if (!localStorage.getItem('products')) {
+        const defaultProducts = [
+          {
+            name: "Classic White T-Shirt",
+            price: 1200,
+            desc: "Premium cotton t-shirt",
+            image: "images/placeholder.jpg"
+          },
+          {
+            name: "Slim Fit Jeans",
+            price: 2500,
+            desc: "Comfortable denim jeans",
+            image: "images/placeholder.jpg"
+          },
+          {
+            name: "Casual Blazer",
+            price: 3500,
+            desc: "Perfect for business casual",
+            image: "images/placeholder.jpg"
+          }
+        ];
+        localStorage.setItem('products', JSON.stringify(defaultProducts));
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+      initializeProducts();
+      
       const toggle = document.getElementById("menu-toggle");
       const mobileNav = document.getElementById("nav-mobile");
       toggle.addEventListener("click", () => {
         mobileNav.classList.toggle("hidden");
       });
 
-      const products = JSON.parse(localStorage.getItem('products')) || [];
+      const products = JSON.parse(localStorage.getItem('products') || [];
       const productGrid = document.getElementById('product-grid');
       
       products.forEach(product => {
