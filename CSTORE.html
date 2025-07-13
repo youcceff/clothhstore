@@ -8,6 +8,42 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <link rel="stylesheet" href="cstore.css">
   <style>
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .product-info {
+      padding: 15px;
+    }
+    
+    .add-to-cart-btn {
+      background: #5a67d8;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .add-to-cart-btn:hover {
+      background: #434190;
+    }
     .best-products {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
@@ -38,6 +74,55 @@
   </style>
 </head>
 <body class="text-white min-h-screen flex flex-col">
+  <!-- [Keep your existing header and hero section] -->
+
+  <section class="bg-white text-gray-800 rounded-t-3xl py-12 px-6 mt-auto" id="shop">
+    <div class="max-w-7xl mx-auto">
+      <h3 class="text-3xl font-bold mb-8 text-center">Featured Products</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="product-grid">
+        <!-- Products will be inserted here by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- [Keep your existing best sellers and cart sections] -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // [Keep your existing menu toggle code]
+      
+      // Load and display products
+      function loadProducts() {
+        const products = JSON.parse(localStorage.getItem('products') || [];
+        const productGrid = document.getElementById('product-grid');
+        
+        productGrid.innerHTML = '';
+        
+        products.forEach(product => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          card.innerHTML = `
+            <img src="${product.image || 'images/placeholder.jpg'}" alt="${product.name}" class="product-image">
+            <div class="product-details">
+              <h3 class="product-title">${product.name}</h3>
+              <p class="product-desc">${product.desc || 'Premium quality product'}</p>
+              <p class="product-price">${product.price} DA</p>
+              <button onclick="addToCart('${product.name}', ${product.price})" 
+                      class="add-to-cart">
+                Add to Cart
+              </button>
+            </div>
+          `;
+          productGrid.appendChild(card);
+        });
+      }
+
+      // Initial load
+      loadProducts();
+      
+      // [Keep your existing swiper and cart code]
+    });
+  </script>
   <header class="bg-transparent py-4 px-4 sm:px-6 max-w-7xl mx-auto w-full">
     <div class="flex items-center justify-between">
       <h1 class="text-2xl font-bold">ClothZone</h1>
