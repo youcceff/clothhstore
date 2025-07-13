@@ -29,6 +29,52 @@ body {
     color: white;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+/* Add to cstore.css */
+.best-products {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 2rem 0;
+  margin: 2rem 0;
+}
+
+.swiper-slide {
+  background: transparent;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: auto;
+}
+
+.swiper-slide img {
+  transition: transform 0.3s ease;
+}
+
+.swiper-slide:hover img {
+  transform: scale(1.03);
+}
+
+.swiper-button-next, 
+.swiper-button-prev {
+  color: white;
+  background: rgba(0,0,0,0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.swiper-button-next:hover, 
+.swiper-button-prev:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.swiper-pagination-bullet {
+  background: white;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
 
 .swiper-button-next, .swiper-button-prev {
     color: white;
