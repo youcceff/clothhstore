@@ -495,5 +495,68 @@
       updateVisits();
     });
   </script>
+  <div class="form-section">
+  <h2>🖼️ Manage Swiper Content</h2>
+  <div id="swiper-controls">
+    <div class="flex items-center mb-4">
+      <input type="file" id="swiper-image" accept="image/*" class="hidden">
+      <label for="swiper-image" class="cursor-pointer bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition mr-3">
+        Add Swiper Image
+      </label>
+      <span id="swiper-file-name" class="text-gray-600">No image selected</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="swiper-images-container">
+      <!-- Swiper images will appear here -->
+    </div>
+  </div>
+</div>
+
+<script>
+// Swiper Image Management
+const swiperImages = JSON.parse(localStorage.getItem('swiperImages') || '[]');
+
+function loadSwiperImages() {
+  const container = document.getElementById('swiper-images-container');
+  container.innerHTML = '';
+  
+  swiperImages.forEach((img, index) => {
+    const imgDiv = document.createElement('div');
+    imgDiv.className = 'relative group';
+    imgDiv.innerHTML = `
+      <img src="${img}" class="w-full h-40 object-cover rounded-lg">
+      <button onclick="removeSwiperImage(${index})" 
+              class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+        ×
+      </button>
+    `;
+    container.appendChild(imgDiv);
+  });
+}
+
+document.getElementById('swiper-image').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    document.getElementById('swiper-file-name').textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      swiperImages.push(event.target.result);
+      localStorage.setItem('swiperImages', JSON.stringify(swiperImages));
+      loadSwiperImages();
+      document.getElementById('swiper-image').value = '';
+      document.getElementById('swiper-file-name').textContent = 'No image selected';
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+function removeSwiperImage(index) {
+  swiperImages.splice(index, 1);
+  localStorage.setItem('swiperImages', JSON.stringify(swiperImages));
+  loadSwiperImages();
+}
+
+// Initialize on load
+loadSwiperImages();
+</script>
 </body>
 </html>
